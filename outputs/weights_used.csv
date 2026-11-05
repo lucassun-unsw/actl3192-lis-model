@@ -1,0 +1,7 @@
+# Population weights per balance member.
+balance_member,weight,source
+400000,0.0707,"ASFA 2026 Table 4 (ATO 2% sample, females 65-69, June 2024): share with $350k-$450k, log-linear interpolation between p50 and p75"
+500000,0.069,"ASFA 2026 Table 4: share with $450k-$575k, log-linear interpolation between p50 and p75"
+650000,0.0537,"ASFA 2026 Table 4: share with $575k-$725k, log-linear interpolation between p75 and p90"
+800000,0.0492,"ASFA 2026 Table 4: share with $725k-$900k, log-linear interpolation between p75 and p90"
+1000000,0.0456,"ASFA 2026 Table 4: share with $900k-$1.1m, extrapolated beyond p90 using the p75-p90 slope"

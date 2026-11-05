@@ -1,0 +1,86 @@
+# Parameters used in this run, with source and evidence / judgement / placeholder label. cap, inc_pct_in and bonus_max are the values actually used. Rows starting 'weights.csv' or 'cohort_inputs.csv' are the input file values, each with its own source.
+parameter,value,description,source,label
+max_rate_fn,1237.7,"Maximum single rate incl. supplements, $ a fortnight","Services Australia, rates from 20 Sep 2026",evidence
+fortnights,26,Fortnights per year,Convention used in Excel model,evidence
+assets_free_area,333000,"Assets test free area, single homeowner","Services Australia, rates from 20 Sep 2026",evidence
+assets_taper_fn_per_1000,3.0,"$ a fortnight per $1,000 over free area","Services Australia, rates from 20 Sep 2026",evidence
+income_free_area_fn,226,"Income test free area, $ a fortnight","Services Australia, rates from 20 Sep 2026",evidence
+income_taper,0.5,Pension reduction per $1 of income over free area,"Services Australia, rates from 20 Sep 2026",evidence
+deeming_threshold,66800,"Deeming threshold, single","Services Australia, rates from 20 Sep 2026",evidence
+deeming_lower,0.0175,Deeming rate below threshold,"Services Australia, rates from 20 Sep 2026",evidence
+deeming_upper,0.0375,Deeming rate above threshold,"Services Australia, rates from 20 Sep 2026",evidence
+lis_asset_share_before,0.6,Share of purchase amount assessed as asset before threshold age,DSS means test rules for lifetime income streams; Reading 1; Week 5 lecture,evidence
+lis_asset_share_after,0.3,Share of purchase amount assessed as asset from threshold age,DSS means test rules for lifetime income streams; Reading 1; Week 5 lecture,evidence
+lis_threshold_age,84,Later of 84 and 5 years after purchase,Week 5 lecture,evidence
+lis_income_share,0.6,Share of gross LIS payments assessed as income,DSS means test rules for lifetime income streams; Reading 1; Week 5 lecture,evidence
+min_drawdown,"((65, 0.05), (75, 0.06), (80, 0.07), (85, 0.09), (90, 0.11), (95, 0.14))","(from age, minimum %) at start of year",Week 5 lecture,evidence
+life_table_file,Data/3302055001DO001_20222024.xlsx,,ABS Life Tables 2022 to 2024,evidence
+life_table_sheet,Table 9,,ABS Life Tables 2022 to 2024,evidence
+life_table_age_col,A,Age column,ABS Table 9 layout,evidence
+life_table_lx_col,F,Female lx column,ABS Table 9 layout,evidence
+life_table_first_row,8,Row holding age 0,ABS Table 9 layout,evidence
+retirement_age,67,,Age Pension age,evidence
+max_age,100,Projection ends at the last ABS age,ABS Table 9 last age,evidence
+real_return,0.03,"Real net return R, ABP and LIS share the same portfolio. Test 0% and 6%",Judgement,judgement
+inflation,0.025,Only used to shrink the fixed nominal LIS purchase amount in real terms,Judgement,judgement
+air,0.02,"LIS assumed investment return, real","Judgement, as in Conexus",judgement
+loading,0.05,LIS product loading,Judgement,judgement
+lis_allocation,0.5,Share of balance at 67 put into LIS,"Judgement, follows Conexus 50% split",judgement
+discount_rate,0.02,Real discount rate for present values,Judgement,judgement
+cohort_balances,"(400000, 500000, 650000)","Single female homeowners, $400k to $650k",Group cohort definition,judgement
+higher_balances,"(800000, 1000000)","Higher balance members, used to show who pays",Group choice,judgement
+death_ages,"(75, 90, 100)",Ages of death for member equity outcomes,Group choice,judgement
+accum_years_held,20,Years the LIS is held before 67 when bought in accumulation,Group choice,judgement
+cap,300000,Real cap on purchase amount given concessional treatment,FINAL POLICY (group decision after Update 3),judgement
+inc_pct_in,0.4,Share of payments inside the cap assessed as income,FINAL POLICY (group decision after Update 3; was 35% in Update 1),judgement
+use_chosen_neutral,False,True = run_all replaces cap and inc_pct_in with choose_neutral_settings() under the weights in use,Modelling switch (Update 1),judgement
+iris_years_cap,5,Max years of deeming growth counted for accumulation IRIS (retargeted_accum),"Group decision, Update 1",judgement
+sens_iris_years_cap,"(0, 5, 10, 20)","iris_years_cap values tested for retargeted_accum (20 = no limit, same as current rules)","Group decision, Update 1",judgement
+above_cap_asset_share,1.0,"Share of the above-cap purchase amount (split at 67, deflated by inflation like the rest) assessed as an asset",Modelling choice (brief); deflation treatment confirmed by group,judgement
+above_cap_income_share,1.0,Share of payments related to the above-cap amount assessed as income,Modelling choice (brief),judgement
+bonus_design,equal_support,'equal_support' = run_all solves bonus_max (bisection) so the cohort gets the same weighted support as under the retargeted policy; 'fixed' = use bonus_max as given,"Group decision, Update 1",judgement
+bonus_max,42948.65131378174,"Government bonus paid into LIS at purchase, full rate","Solved by run_all for equal support with the retargeted policy (Update 1 design); 5,000 here is only the old placeholder, used if bonus_design = 'fixed'",judgement
+bonus_taper_start,400000,Balance at which bonus starts to taper,"Group decision, Update 1: keep taper shape",judgement
+bonus_taper_end,700000,Balance at which bonus reaches zero,"Group decision, Update 1: keep taper shape",judgement
+bonus_flat_amount,10000,"Flat bonus paid at every balance, no taper (scenario bonus_flat)","Group decision, Update 1: upper bound sensitivity",judgement
+bonus_solve_start,10000,First upper bracket for the bonus_max bisection (doubled until it brackets the target),Modelling choice,judgement
+bonus_solve_tol,0.01,Bisection stops when the bracket is narrower than this ($),Modelling choice,judgement
+weights_file,inputs/weights.csv,Population weight per balance member = share of women 65 to 69 with super in each balance band (interpolated between published percentiles; $1m band extrapolated beyond p90),"ASFA 2026 Table 4 (ATO 2% sample, women aged 65 to 69 with super, June 2024); Update 2",evidence
+weights,"((400000, 0.0707), (500000, 0.069), (650000, 0.0537), (800000, 0.0492), (1000000, 0.0456))","None = read weights_file; or ((balance, weight), ...) to override (used by choose_neutral_settings)",Modelling switch,judgement
+neutrality_primary,all_purchasers,Primary budget neutrality definition; cohort only is reported as secondary,"Group decision, Update 1",judgement
+grid_cap,"(100000, 400000, 25000)","(start, stop, step) of cap grid",Brief,judgement
+grid_inc_pct,"(0.3, 0.6, 0.05)","(start, stop, step) of inc_pct_in grid",Brief,judgement
+fine_cap,"(50000, 12500)","(half width, step) of the fine cap grid around the chosen cap: $250k to $350k","Group decision, Update 1",judgement
+fine_inc_pct,"(0.05, 0.025)","(half width, step) of the fine inc_pct_in grid around the chosen rate: 30% to 40%","Group decision, Update 1",judgement
+neutrality_tolerance,0.02,Within 2% of current settings weighted cost,Brief,judgement
+n_best,5,Number of closest-to-neutral combinations shown in the gains shift table,Modelling choice,judgement
+sens_real_return,"(0.0, 0.03, 0.06)",,Brief,judgement
+sens_allocation,"(0.3, 0.5)",,Brief,judgement
+sens_discount,"(0.01, 0.03)",,Brief,judgement
+sens_air,"(0.01, 0.03)",,Brief,judgement
+count_source,derived,'direct' = cohort_counts_file; 'derived' = women turning 67 x band share x single share x homeowner share from cohort_inputs_file,"Group decision, Update 2",judgement
+cohort_counts_file,inputs/cohort_counts.csv,Direct counts; not used while count_source = 'derived',"PLACEHOLDER counts, to be replaced with ATO/ABS numbers",placeholder
+cohort_inputs_file,inputs/cohort_inputs.csv,Inputs for count_source = 'derived' (rows also listed in this sheet),ASFA 2026 Tables 1 and 4; ABS 2021 Census G06; ABS Housing Occupancy and Costs 2019-20 Table 6.1 (Update 3). Each input's source is in its own column of the file,evidence
+placeholder_count,1000,Count per balance member per year written to the placeholder cohort file,PLACEHOLDER,placeholder
+placeholder_cohort_inputs,"(100000, 0.04, 0.5, 0.5)","(women turning 67, share in band, single share, homeowner share) written to the placeholder cohort inputs file; chosen only so derived counts equal placeholder_count",PLACEHOLDER,placeholder
+scale_up_years,10,Number of entry years,Brief,judgement
+take_up_rates,"(0.05, 0.1, 0.2)",Take-up scenarios (baseline u0 for break even),Brief,judgement
+sens_homeowner_share,"(0.717, 0.767)","Homeowner shares tested in the fiscal scale up only (10 and 5 points below the file value), as single older women likely own less often than all households 65 to 74","Group decision, Update 3",judgement
+take_up_step,0.01,Extra take-up used for the marginal fiscal cost (1 percentage point),"Group decision, Update 1",judgement
+options_take_up,0.1,"Take-up used in options_summary (10 year total, break even u0)","Group decision, Update 1",judgement
+options_iris_balance,650000,Member used for the accumulation IRIS gap in options_summary,"Group decision, Update 1",judgement
+chart_dpi,300,PNG resolution,Brief (overrides 150 dpi in ft_style_graph.md),judgement
+chart_member,500000,Member shown in the Age Pension by age chart,Brief,judgement
+"weights.csv: weight 400,000",0.0707,Population weight (share of women 65 to 69 with super in the band),"ASFA 2026 Table 4 (ATO 2% sample, females 65-69, June 2024): share with $350k-$450k, log-linear interpolation between p50 and p75",evidence
+"weights.csv: weight 500,000",0.069,Population weight (share of women 65 to 69 with super in the band),"ASFA 2026 Table 4: share with $450k-$575k, log-linear interpolation between p50 and p75",evidence
+"weights.csv: weight 650,000",0.0537,Population weight (share of women 65 to 69 with super in the band),"ASFA 2026 Table 4: share with $575k-$725k, log-linear interpolation between p75 and p90",evidence
+"weights.csv: weight 800,000",0.0492,Population weight (share of women 65 to 69 with super in the band),"ASFA 2026 Table 4: share with $725k-$900k, log-linear interpolation between p75 and p90",evidence
+"weights.csv: weight 1,000,000",0.0456,Population weight (share of women 65 to 69 with super in the band),"ASFA 2026 Table 4: share with $900k-$1.1m, extrapolated beyond p90 using the p75-p90 slope",evidence
+cohort_inputs.csv: women_turning_67 (all members),99106,"Derived counts input, used when count_source = 'derived' (now 'derived')","ASFA 2026 Table 1: 495,530 women aged 65 to 69 with super, divided by 5",evidence
+"cohort_inputs.csv: share_in_band (400,000)",0.0707,"Derived counts input, used when count_source = 'derived' (now 'derived')","As in weights.csv: ASFA 2026 Table 4 (ATO 2% sample, females 65-69, June 2024): share with $350k-$450k, log-linear interpolation between p50 and p75",evidence
+"cohort_inputs.csv: share_in_band (500,000)",0.069,"Derived counts input, used when count_source = 'derived' (now 'derived')","As in weights.csv: ASFA 2026 Table 4: share with $450k-$575k, log-linear interpolation between p50 and p75",evidence
+"cohort_inputs.csv: share_in_band (650,000)",0.0537,"Derived counts input, used when count_source = 'derived' (now 'derived')","As in weights.csv: ASFA 2026 Table 4: share with $575k-$725k, log-linear interpolation between p75 and p90",evidence
+"cohort_inputs.csv: share_in_band (800,000)",0.0492,"Derived counts input, used when count_source = 'derived' (now 'derived')","As in weights.csv: ASFA 2026 Table 4: share with $725k-$900k, log-linear interpolation between p75 and p90",evidence
+"cohort_inputs.csv: share_in_band (1,000,000)",0.0456,"Derived counts input, used when count_source = 'derived' (now 'derived')","As in weights.csv: ASFA 2026 Table 4: share with $900k-$1.1m, extrapolated beyond p90 using the p75-p90 slope",evidence
+cohort_inputs.csv: single_share (all members),0.385,"Derived counts input, used when count_source = 'derived' (now 'derived')","ABS 2021 Census GCP Australia Table G06: females aged 65 to 74 not married 446,656 of 1,160,455 (social marital status; de facto couples count as couples)",evidence
+cohort_inputs.csv: homeowner_share (all members),0.817,"Derived counts input, used when count_source = 'derived' (now 'derived')","ABS Housing Occupancy and Costs 2019-20 Table 6.1: total owners, household reference person aged 65 to 74",evidence

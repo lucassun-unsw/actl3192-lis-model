@@ -1,0 +1,4 @@
+# Retargeted settings used, and the combination closest to neutral (all purchasers) under the weights in use.
+item,definition,cap,inc_pct_in,weighted_cost,current_weighted_cost,difference,pct_difference,within_tolerance
+settings used,all_purchasers,300000.0,0.4,14571.891206278382,14384.142312555574,187.74889372280813,0.013052491392477855,True
+choose_neutral_settings(),all_purchasers,287500.0,0.375,14449.12892899507,14384.142312555574,64.98661643949526,0.0045179347525482975,True

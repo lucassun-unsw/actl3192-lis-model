@@ -1,0 +1,6 @@
+# PRIMARY definition: all purchasers. Combinations within 2% of current settings.
+definition,role,cap,inc_pct_in,weighted_cost,current_weighted_cost,difference,pct_difference,within_tolerance,same_as_current,is_default
+all_purchasers,primary,275000,0.35,14308.942316708382,14384.142312555574,-75.19999584719153,-0.005227979132377692,True,False,False
+all_purchasers,primary,350000,0.5,14262.3734151141,14384.142312555574,-121.76889744147411,-0.008465495877024587,True,False,False
+all_purchasers,primary,400000,0.55,14509.804569729735,14384.142312555574,125.66225717416091,0.008736166150447033,True,False,False
+all_purchasers,primary,300000,0.4,14571.891206278382,14384.142312555574,187.74889372280813,0.013052491392477855,True,False,True
